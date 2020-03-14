@@ -1,0 +1,66 @@
+
+.button {
+	color: var(--Button_Color);
+	border: none;
+	padding: 1px 10px;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+	font-size: large;
+	cursor: default;
+}
+
+.linkbutton {
+	.button;
+	text-decoration:none;
+}
+
+.warnbutton {
+	.button;
+	background-color: var(--Button_Warn_Color);
+	&:hover {
+		background: var(--Button_Warn_Hover_Color);
+	}
+}
+
+.safebutton {
+	.button;
+	background-color:var(--Button_Safe_Color);
+	&:hover {
+		background: var(--Button_Safe_Hover_Color);
+	}
+}
+
+.normalbutton {
+	.button;
+	background-color:var(--Button_Normal_Color);
+	&:hover  {
+		background: var(--Button_Normal_Hover_Color);
+	}
+}
+
+.required {
+	background-color: pink;
+}
+
+input[required] {
+	background-color: pink;
+}
+
+.dateinput {
+	background-image:url('./images/calendar.gif');
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
+input[type="reset"]  {
+	.button;
+	.normalbutton;
+}
+
+input[type="submit"], button[type="submit"] {
+	.button;
+	.warnbutton;
+}
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>	
+
+	<properties>
+	    <property name="dbtype" value="MySQL"/><!-- The type of database: MySQL, Oracle -->
+	</properties>
+
+	<settings>
+		<setting name="cacheEnabled" value="true"/>
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="multipleResultSetsEnabled" value="false" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="org.apache.ibatis.type.EnumOrdinalTypeHandler" alias="EnumOrdinalTypeHandler"/>
+		<typeAlias type="org.apache.ibatis.type.BooleanTypeHandler" alias="BooleanTypeHandler" />
+		<typeAlias type="net.xway.base.database.mybatis.type.DateTypeHandler" alias="DateTypeHandler" />
+		<typeAlias type="net.xway.base.database.mybatis.type.IPTypeHandler" alias="IPTypeHandler" />
+		<typeAlias type="net.xway.base.database.PageResult" alias="PageResult" />
+		<typeAlias type="java.lang.String" alias="IP" />
+	</typeAliases>
+
+	<typeHandlers> 
+		<typeHandler javaType="java.lang.Boolean" jdbcType="INTEGER" handler="BooleanTypeHandler" />
+		<typeHandler javaType="java.util.Date" jdbcType="BIGINT" handler="DateTypeHandler" /> 
+		<typeHandler javaType="IP" jdbcType="INTEGER" handler="IPTypeHandler" /> 
+	</typeHandlers>  
+
+</configuration>

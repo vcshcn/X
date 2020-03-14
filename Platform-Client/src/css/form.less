@@ -1,0 +1,76 @@
+@import (reference) "skin.less";
+
+.flex-layout {
+    display: flex;
+
+    label {
+        text-align: left;
+    }
+
+    span {
+        background-color: #bad7e6;
+        text-align: left;
+        white-space:nowrap;
+        padding: 5px 30px 5px 2px;
+        margin-bottom: 5px;
+    }
+
+}
+
+.grid-layout {
+    display: grid;
+    grid-row-gap: 2px;
+    grid-column-gap: 3px;
+    
+    label {
+        background: Gainsboro;
+        text-align: right;
+        justify-self: stretch;
+        padding: 5px;
+        word-wrap:break-word;
+    }
+
+    span {
+        background-color: #bad7e6;
+        text-align: left;
+        justify-self: stretch;
+        white-space:nowrap;
+        padding: 5px 40px 5px 2px;
+    }
+
+}
+
+.view  {
+    width: 98%;
+
+    header {
+        font-weight:bold;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+    
+    .pickup-img {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    label, input[type="text"], input[type="search"], textarea, select {
+        margin-left: 5px;        
+    }
+
+    input[type="text"], input[type="search"], textarea {
+        width: 98%;
+    }
+
+
+    footer {
+        margin-top: 10px;
+        text-align: center;
+
+        a {
+            .safebutton;
+            text-decoration: none;
+        }
+    }
+}

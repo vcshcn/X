@@ -1,0 +1,10 @@
+module net.xway.platform.system.microservice {
+
+	requires spring.boot.autoconfigure;
+	requires spring.boot;
+	requires spring.context;
+	requires spring.cloud.commons;
+	requires spring.web;
+	requires spring.beans;
+	requires net.xway.platform.system.api;
+}

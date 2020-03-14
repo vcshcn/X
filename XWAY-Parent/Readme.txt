@@ -1,0 +1,9 @@
+XWAY-Parent
+  Platform
+    Platform-Base
+    Platform-MicroService-Parent
+      Platform-System-api
+      Platform-System-api-impl
+      Platform-System-MicroService
+    Platform-Eureka
+    Platform-WEB

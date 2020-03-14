@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IRoleDAO">
+	
+	<resultMap type="net.xway.platform.system.dto.Role" id="ROLE">
+		<id property="roleid" column="ROLEID"/>
+		<result property="name" column="NAME" />
+		<result property="description" column="DESCRIPTION" />
+		
+		<collection property="menus"      column="{roleid=ROLEID}" select="net.xway.platform.system.dao.IMenuDAO.findMenuByRoleID"/>
+		<collection property="privileges" column="{roleid=ROLEID}" select="net.xway.platform.system.dao.IPrivilegeDAO.findPrivilegeByRoleID"/>
+	</resultMap>
+	
+	<select id="findByPrimaryKey" parameterType="int" resultMap="ROLE">
+		SELECT ROLEID, NAME, DESCRIPTION FROM XT_ROLE WHERE ROLEID=#{roleid}
+	</select>
+	
+ 	<select id="findPage" parameterType="java.util.Map" resultMap="ROLE" >
+ 		SELECT * FROM XT_ROLE WHERE 1=1 <if test="name != null">AND NAME=#{name}</if> LIMIT #{OFFSET}, #{ROWS}
+ 	</select>
+
+	<select id="findCount" parameterType="java.util.Map" resultType="int">
+ 		SELECT COUNT(*) FROM XT_ROLE WHERE 1=1 <if test="name != null">AND NAME=#{name}</if>
+ 	</select>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="roleid" parameterType="net.xway.platform.system.dto.Role">
+		INSERT INTO XT_ROLE(NAME, DESCRIPTION) VALUES(#{name}, #{description})
+	</insert>
+
+	<update id="update" parameterType="net.xway.platform.system.dto.Role">
+		UPDATE XT_ROLE SET NAME=#{name}, DESCRIPTION=#{description} WHERE ROLEID=#{roleid}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM XT_ROLE WHERE ROLEID=#{roleid}
+	</delete>
+
+</mapper>

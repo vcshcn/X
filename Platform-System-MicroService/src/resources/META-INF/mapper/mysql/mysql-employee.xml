@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IEmployeeDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Employee" id="EMPLOYEE" extends="net.xway.platform.system.dao.IUserDAO.USER">
+	
+		<association property="department" column="DEPARTMENTID" javaType="net.xway.platform.system.dto.Department">
+			<id property="departmentid" column="DEPARTMENTID"/>
+			<result property="name" column="DEPARTMENTNAME"/>
+			<result property="tel" column="DEPARTMENTTEL"/>
+			<result property="description" column="DEPARTMENTDESCRIPTION"/>
+			
+			<association property="org" column="ORGID" javaType="net.xway.platform.system.dto.Org">
+				<id property="orgid" column="ORGID"/>
+				<result property="name" column="ORGNAME"/>
+				<result property="tel" column="ORGTEL"/>
+				<result property="address" column="ORGADDRESS"/>
+				<result property="description" column="ORGDESCRIPTION"/>
+			</association>
+			
+		</association>
+	</resultMap>
+
+	<!--
+		#####################################
+		##
+		##	XT_LOGIN.LOGINID === XT_USER.USERID === XT_EMPLOYEE.USERID
+		##
+		#####################################
+	 -->
+ 	<select id="findByPrimaryKey" parameterType="int" resultMap="EMPLOYEE">
+		SELECT * FROM XV_EMPLOYEE WHERE USERID=#{userid}
+	</select>
+
+ 	<select id="findEmployeeByLoginID" parameterType="int" resultMap="EMPLOYEE">
+ 		SELECT * FROM XV_EMPLOYEE WHERE USERID=#{loginid}
+	</select>
+
+	<select id="findEmployeeByDepartmentID" parameterType="int" resultMap="EMPLOYEE">
+ 		SELECT * FROM XV_EMPLOYEE WHERE DEPARTMENTID=#{departmentid}
+ 	</select>
+
+	<sql id="findPageEmployeeWhere">
+		WHERE BDELETE=0 
+		<if test="from != null and to != null">AND BIRTHDAY BETWEEN #{from} AND #{to}</if>
+		<if test="from != null and to == null">AND BIRTHDAY &gt; #{from} </if>
+		<if test="from == null and to != null">AND BIRTHDAY &lt; #{to}</if>
+		<if test="nickname != null">AND NICKNAME=#{nickname}</if> 
+		<if test="name != null">AND NAME=#{name}</if>
+		<if test="roleid != null">AND ROLEID=#{roleid}</if>
+		<if test="departmentid != null">AND DEPARTMENTID=#{departmentid}</if>
+	</sql>
+	
+ 	<select id="findEmployeeByUserID" parameterType="int" resultMap="EMPLOYEE">
+		SELECT * FROM XV_EMPLOYEE WHERE USERID=#{userid}
+	</select>
+
+ 	<select id="findPage" parameterType="java.util.Map" resultMap="EMPLOYEE" >
+ 		SELECT * FROM XV_EMPLOYEE <include refid="findPageEmployeeWhere"/> LIMIT #{OFFSET}, #{ROWS}
+ 	</select>
+
+	<select id="findCount" parameterType="java.util.Map" resultType="int">
+ 		SELECT COUNT(*) FROM XV_EMPLOYEE <include refid="findPageEmployeeWhere"/>
+ 	</select>
+
+	<insert id="insert" keyProperty="employeeid" parameterType="net.xway.platform.system.dto.Employee">
+		INSERT INTO XT_EMPLOYEE(USERID, DEPARTMENTID) VALUES(#{userid}, #{department.departmentid ,jdbcType=INTEGER})
+	</insert>
+
+	<update id="update" parameterType="net.xway.platform.system.dto.Employee">
+		UPDATE XT_EMPLOYEE SET DEPARTMENTID=#{department.departmentid} WHERE USERID=#{userid}
+	</update>
+	
+	<!-- null op, for clear cache -->
+	<delete id="delete" parameterType="int">
+		UPDATE XT_EMPLOYEE SET USERID=USERID WHERE USERID=#{userid}
+	</delete>
+
+</mapper>

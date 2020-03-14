@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.INotesDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Notes" id="NOTES">
+		<id property="notesid" column="NOTESID" />
+		<result property="title" column="TITLE" />
+		<result property="user.userid" column="USERID" />
+		<result property="content" column="CONTENT" />
+		<result property="createtime" column="CREATETIME" javaType="Date" jdbcType="BIGINT" />
+	</resultMap>
+
+ 	<select id="findByPrimaryKey" parameterType="int" resultMap="NOTES" >
+		SELECT * FROM XT_NOTES WHERE NOTESID=#{notesid}
+ 	</select>
+
+ 	<select id="findPage" parameterType="java.util.Map" resultMap="NOTES" >
+		SELECT * FROM XT_NOTES WHERE USERID=#{userid} LIMIT #{OFFSET}, #{ROWS}
+ 	</select>
+
+	<select id="findCount" parameterType="java.util.Map" resultType="int">
+ 		SELECT COUNT(*)  FROM XT_NOTES WHERE USERID=#{userid}
+ 	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="notesid"  parameterType="net.xway.platform.system.dto.Notes">
+		INSERT INTO XT_NOTES(USERID, TITLE, CONTENT, CREATETIME) VALUES(#{user.userid}, #{title},#{content},#{createtime, javaType=Date, jdbcType=BIGINT})
+	</insert>
+	
+	<update id="update">
+		UPDATE XT_NOTES SET TITLE=#{title}, CONTENT=#{content}, CREATETIME=#{createtime, javaType=Date, jdbcType=BIGINT} WHERE NOTESID=#{notesid}
+	</update>
+	
+	<delete id="delete"  parameterType="int">
+		DELETE FROM XT_NOTES WHERE NOTESID=#{notesid}
+	</delete>
+
+</mapper>

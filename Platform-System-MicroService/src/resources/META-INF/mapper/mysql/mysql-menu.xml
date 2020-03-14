@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IMenuDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Menu" id="MENU">
+		<id property="menuid" column="MENUID" />
+		<result property="label" column="LABEL" />
+		<result property="parameter" column="PARAMETER" />
+		
+		<association property="resource" column="RESOURCEID" javaType="net.xway.platform.system.dto.Resource">
+			<id property="resourceid" column="RESOURCEID"/>
+			<result property="label" column="RESOURCELABEL"/>
+			<result property="link" column="LINK"/>
+			<result property="canmenu" column="CANMENU"/>
+			<result property="stay" column="STAY"/>
+
+			<association property="privilege" column="PRIVILEGEID" javaType="net.xway.platform.system.dto.Privilege">
+				<id property="privilegeid" column="PRIVILEGEID"/>
+				<result property="name" column="CANMENU"/>
+				<result property="description" column="STAY"/>
+			</association>
+		</association>
+	</resultMap>
+
+	<resultMap type="net.xway.platform.system.dto.Menu" id="MENUTREE">
+		<id property="menuid" column="MENUID" />
+		<result property="label" column="LABEL" />
+		<result property="parameter" column="PARAMETER" />
+		
+		<association property="resource" column="RESOURCEID" javaType="net.xway.platform.system.dto.Resource">
+			<id property="resourceid" column="RESOURCEID"/>
+			<result property="label" column="RESOURCELABEL"/>
+			<result property="link" column="LINK"/>
+			<result property="canmenu" column="CANMENU"/>
+			<result property="stay" column="STAY"/>
+
+			<association property="privilege" column="PRIVILEGEID" javaType="net.xway.platform.system.dto.Privilege">
+				<id property="privilegeid" column="PRIVILEGEID"/>
+				<result property="name" column="CANMENU"/>
+				<result property="description" column="STAY"/>
+			</association>
+		</association>
+		
+		<collection property="children" column="{menuid=MENUID}" select="findChildrenMenus"/>
+	</resultMap>
+
+
+	<!-- menu -->
+	<select id="findByPrimaryKey" parameterType="int" resultMap="MENU">
+		SELECT A.MENUID, A.LABEL, A.`ORDER`, A.PARAMETER, A.PARENTID, B.RESOURCEID RESOURCEID, B.LINK RESOURCE_LINK FROM XT_MENU A LEFT JOIN XT_RESOURCE B ON A.RESOURCEID=B.RESOURCEID WHERE MENUID=#{menuid}
+	</select>
+
+	<select id="findAll" resultMap="MENU">
+		SELECT A.MENUID, A.LABEL, A.`ORDER`, A.PARAMETER, A.PARENTID, B.RESOURCEID RESOURCEID, B.LINK RESOURCE_LINK FROM XT_MENU A LEFT JOIN XT_RESOURCE B ON A.RESOURCEID=B.RESOURCEID
+	</select>
+
+	<select id="findAllMenuTree" resultMap="MENUTREE">
+		SELECT A.MENUID, A.LABEL, A.`ORDER`, A.PARAMETER, A.PARENTID, B.RESOURCEID RESOURCEID, B.LINK RESOURCE_LINK  FROM XT_MENU A LEFT JOIN XT_RESOURCE B ON A.RESOURCEID=B.RESOURCEID WHERE A.PARENTID IS NULL
+	</select>
+
+	<select id="findChildrenMenus" resultMap="MENU">
+		SELECT * FROM XT_MENU WHERE PARENTID=#{menuid} ORDER BY `ORDER`
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="menuid" parameterType="net.xway.platform.system.dto.Menu">
+		INSERT INTO XT_MENU(LABEL, `ORDER`, PARAMETER, PARENTID, RESOURCEID) VALUES(#{label}, #{order}, #{parameter}, #{parent.menuid}, #{resource.resourceid})
+	</insert>
+	
+	<update id="update" >
+		UPDATE XT_MENU SET LABEL=#{label}, PARAMETER=#{parameter}, RESOURCEID=#{resource.resourceid}, `ORDER`=#{order}, PARENTID=#{parent.menuid} WHERE MENUID=#{menuid}
+	</update>
+	
+	<delete id="delete" parameterType="int" >
+		DELETE FROM  XT_MENU WHERE MENUID=#{menuid}
+	</delete>
+
+	<!-- rolemenu table  -->
+
+	<resultMap type="net.xway.platform.system.dto.Menu" id="ROLEMENU">
+		<id property="menuid" column="MENUID" />
+		<result property="label" column="LABEL" />
+		<result property="parameter" column="PARAMETER" />
+		
+		<association property="resource" column="RESOURCEID" javaType="net.xway.platform.system.dto.Resource">
+			<id property="resourceid" column="RESOURCEID"/>
+			<result property="label" column="RESOURCELABEL"/>
+			<result property="link" column="LINK"/>
+			<result property="canmenu" column="CANMENU"/>
+			<result property="stay" column="STAY"/>
+
+
+			<association property="privilege" column="PRIVILEGEID" javaType="net.xway.platform.system.dto.Privilege">
+				<id property="privilegeid" column="PRIVILEGEID"/>
+				<result property="name" column="CANMENU"/>
+				<result property="description" column="STAY"/>
+			</association>
+		</association>
+		
+		<collection property="children" column="{menuid=MENUID, roleid=ROLEID}" select="findChildrenMenuByRoleID"/>
+	</resultMap>
+
+	
+	<select id="findMenuByRoleID"  resultMap="ROLEMENU">
+		SELECT A.*, XT_ROLEMENU.ROLEID FROM (
+			SELECT XT_MENU.MENUID, XT_MENU.LABEL, XT_MENU.`ORDER`, XT_MENU.PARENTID, XT_MENU.RESOURCEID,XT_MENU.PARAMETER,XT_RESOURCE.LINK,XT_RESOURCE.LABEL RESOURCELABEL,XT_RESOURCE.DESCRIPTION, XT_RESOURCE.CANMENU,XT_RESOURCE.PRIVILEGEID,XT_RESOURCE.STAY
+  			FROM XT_MENU LEFT JOIN XT_RESOURCE ON XT_MENU.RESOURCEID = XT_RESOURCE.RESOURCEID
+		) A INNER JOIN XT_ROLEMENU ON A.MENUID=XT_ROLEMENU.MENUID
+		WHERE A.PARENTID IS NULL AND XT_ROLEMENU.ROLEID=#{roleid} ORDER BY A.`ORDER`
+	</select>
+
+	<select id="findChildrenMenuByRoleID" resultMap="ROLEMENU">
+		SELECT A.*, XT_ROLEMENU.ROLEID FROM (
+			SELECT XT_MENU.MENUID, XT_MENU.LABEL, XT_MENU.`ORDER`, XT_MENU.PARENTID, XT_MENU.RESOURCEID,XT_MENU.PARAMETER,XT_RESOURCE.LINK,XT_RESOURCE.LABEL RESOURCELABEL,XT_RESOURCE.DESCRIPTION, XT_RESOURCE.CANMENU,XT_RESOURCE.PRIVILEGEID,XT_RESOURCE.STAY
+  			FROM XT_MENU LEFT JOIN XT_RESOURCE ON XT_MENU.RESOURCEID = XT_RESOURCE.RESOURCEID
+		) A INNER JOIN XT_ROLEMENU ON A.MENUID=XT_ROLEMENU.MENUID
+		WHERE A.PARENTID=#{menuid}  AND XT_ROLEMENU.ROLEID=#{roleid} ORDER BY A.`ORDER`
+	</select>
+
+	<insert id="insertRoleMenu">
+		INSERT INTO XT_ROLEMENU(ROLEID, MENUID) VALUES <foreach collection="menuid" item="m" index="index" separator=",">(#{roleid}, #{m}) </foreach>
+	</insert>
+	
+	<delete id="deleteMenuByRoleID"  parameterType="int">
+		DELETE FROM XT_ROLEMENU WHERE ROLEID=#{roleid}
+	</delete>
+
+
+</mapper>

@@ -1,0 +1,46 @@
+@import (reference) "skin.less";
+
+.tabs {
+	padding: 3px;
+    border-radius: 3px;
+    
+    > ul {
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+
+        > li {
+            display: inline-block;
+            background-color: var(--Tabs_NoneActiveTitleBar_Background);
+            padding: 3px 7px 3px 7px;
+            border: 1px solid lightgray;
+            border-radius: 7px  7px 0 0;
+            font-size: large;
+            margin-right: 1px;
+
+            &:hover {
+                background-color: var(--Tabs_HoveerTitleBar_Background);
+            }
+
+            a {
+                font-size: medium;
+                text-decoration: none;
+                color: var(--Tabs_ActiveTitleBar_Color);
+                cursor: pointer;
+            }
+        }
+
+        > .active {
+            background-color: var(--Tabs_ActiveTitleBar_Background);
+            font-weight: bold;
+        }
+    }
+
+    .tab-context-border {
+        border: solid 1px lightgray;
+        padding: 2mm 2mm 5mm 2mm;
+
+    }
+
+}
+

@@ -1,0 +1,60 @@
+@import (reference) "skin.less";
+
+.calendar {
+	margin: 5px 5px 10px 5px;
+    text-align:center;
+
+    a {
+        cursor: pointer;
+    }
+
+
+    table {
+        border-collapse: separate; 
+        border-spacing: 3px;
+        border: 2px solid  white;
+        width: 100%;
+
+        th {
+            background-color: LightBlue;
+        }
+
+        td {
+            background-color : Gainsboro;
+            border: 1px solid white;
+            cursor: pointer;
+            &:hover {
+                background-color : orange;
+            }
+        }
+
+        .day {
+            background-color: inherit;
+        }
+
+        .sunday {
+            background-color : PaleGreen;
+        }
+
+        .week {
+            background-color : Beige ;
+        }
+
+        .today {
+            background-color : orange;
+        }
+
+        .select {
+            background-color : yellow ;
+        }
+
+    }
+}
+
+.clear-button {
+    background-color : #a02040  !important;   
+}
+
+.today-button {
+    background-color : orange  !important;
+}

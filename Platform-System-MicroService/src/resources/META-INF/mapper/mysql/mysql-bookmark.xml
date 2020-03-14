@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IBookmarkDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Bookmark" id="BOOKMARK">
+		<id property="bookmarkid" column="BOOKMARKID" />
+		<result property="name" column="NAME" />
+		<result property="link" column="LINK" />
+		<result property="userid" column="USERID" />
+	</resultMap>
+
+ 	<select id="findBookmarkByUser" parameterType="int" resultMap="BOOKMARK" >
+		SELECT * FROM XT_BOOKMARK WHERE USERID=#{userid} 
+ 	</select>
+
+ 	<select id="findByPrimaryKey" parameterType="int" resultMap="BOOKMARK" >
+		SELECT * FROM XT_BOOKMARK WHERE BOOKMARKID=#{bookmarkid}
+ 	</select>
+
+ 	<select id="findPage" parameterType="java.util.Map" resultMap="BOOKMARK" >
+		SELECT * FROM XT_BOOKMARK WHERE USERID=#{userid} LIMIT #{OFFSET}, #{ROWS}
+ 	</select>
+
+	<select id="findCount" parameterType="java.util.Map" resultType="int">
+ 		SELECT COUNT(*)  FROM XT_BOOKMARK WHERE USERID=#{userid}
+ 	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="bookmarkid"  parameterType="net.xway.platform.system.dto.Bookmark">
+		INSERT INTO XT_BOOKMARK(NAME, LINK, USERID) VALUES(#{name}, #{link}, #{userid})
+	</insert>
+	
+	<update id="update">
+		UPDATE XT_BOOKMARK SET NAME=#{name},LINK=#{link} WHERE BOOKMARKID=#{bookmarkid}
+	</update>
+	
+	<delete id="delete"  parameterType="int">
+		DELETE FROM XT_BOOKMARK WHERE BOOKMARKID=#{bookmarkid}
+	</delete>
+
+</mapper>

@@ -1,0 +1,147 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>xway</name>
+	<groupId>net.xway</groupId>
+	<artifactId>xway-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<inceptionYear>2012</inceptionYear>
+	<description>XWAY PROJECT</description>
+	<url>http://xway.vcshcn.cn</url>
+	<packaging>pom</packaging>
+
+	<organization>
+		<name>XWAY</name>
+		<url>http://xway.vcshcn.cn</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>vcshcn</name>
+			<id>vcshcn</id>
+			<email>vcshcn@163.com</email>
+			<organization/>
+			<url>http://vcshcn.cn</url>
+			<roles>
+				<role>all</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>vcshcn</name>
+		</contributor>
+	</contributors>
+	
+	<ciManagement>
+		<system>xway</system>
+	</ciManagement>
+	
+	<scm>
+		<connection>scm:github:https://github.com/vcshcn/X.git</connection>
+		<developerConnection>scm:github:https://github.com/vcshcn/X.git</developerConnection>
+		<url>https://github.com/vcshcn/X.git</url>
+	</scm>
+
+	<repositories>
+        <repository>
+            <id>maven-ali</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public//</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+
+		<repository>
+		    <id>Alfresco Maven Repository</id>
+		    <url>https://maven.alfresco.com/nexus/content/groups/public/</url>
+		</repository>
+
+		<repository>
+			<id>central</id>
+			<name>Repository for Maven2</name>
+			<url>http://repo1.maven.org/maven2</url>
+		</repository>
+
+	</repositories>
+	
+	<properties>
+		<!-- Project information -->
+		<project.target.name>xway</project.target.name>
+		<project.version>0.0.1-SNAPSHOT</project.version>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <project.build.finalName>${project.target.name}-${project.name}-${project.version}</project.build.finalName>
+
+		<!-- Component  -->
+		<spring.version>5.2.3.RELEASE</spring.version>
+		<spring-boot.version>2.2.4.RELEASE</spring-boot.version>
+		<spring-cloud.version>Hoxton.SR1</spring-cloud.version>
+
+		<!--  Compiler env -->
+		<java.version>13</java.version>
+		<maven.compiler.target>13</maven.compiler.target>
+		<maven.compiler.source>13</maven.compiler.source>
+		<maven.compiler.compilerVersion>13</maven.compiler.compilerVersion>
+		
+		<!-- Platform -->
+		<platform.version>0.0.1-SNAPSHOT</platform.version>
+        
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+			    <groupId>org.springframework</groupId>
+			    <artifactId>spring-test</artifactId>
+			    <version>${spring-version}</version>
+			    <scope>test</scope>
+			</dependency>
+
+			<dependency>
+			    <groupId>junit</groupId>
+			    <artifactId>junit</artifactId>
+			    <version>4.12</version>
+			    <scope>test</scope>
+			</dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+			<dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-dependencies</artifactId>
+			    <version>${spring-boot.version}</version>
+			    <type>pom</type>
+			    <scope>import</scope>
+			</dependency>
+		</dependencies>
+		
+	</dependencyManagement>	
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+ 					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

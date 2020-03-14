@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.ILoginStatusDAO">
+	
+	<resultMap type="net.xway.platform.system.dto.LoginStatus" id="LOGINSTATUS">
+		<id property="loginstatusid" column="LOGINSTATUSID" />
+		<result property="lastlogintime" column="LASTLOGINTIME" javaType="Date" jdbcType="BIGINT" />
+		<result property="lastip" column="LASTIP" javaType="IP" jdbcType="INTEGER" />
+		<result property="lastsuccess" column="LASTSUCCESS" />
+		<result property="enablelogintime" column="ENABLELOGINTIME" javaType="Date"  jdbcType="BIGINT"/>
+		<result property="loginfailtimes" column="LOGINFAILTIMES" />	
+	</resultMap>
+	
+	<select id="findByPrimaryKey" parameterType="int" resultMap="LOGINSTATUS">
+		SELECT * FROM XT_LOGINSTATUS WHERE LOGINSTATUSID=#{loginstatusid}
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="loginstatusid" parameterType="net.xway.platform.system.dto.LoginStatus">
+		INSERT INTO XT_LOGINSTATUS(LOGINSTATUSID, LASTLOGINTIME, LASTIP, LASTSUCCESS, ENABLELOGINTIME, LOGINFAILTIMES) VALUES(#{loginstatusid}, #{lastlogintime, javaType=Date, jdbcType=BIGINT}, #{lastip,javaType=IP, jdbcType=INTEGER}, #{lastsuccess}, #{enablelogintime, javaType=Date, jdbcType=BIGINT}, #{loginfailtimes})
+	</insert>
+
+	<update id="update" parameterType="net.xway.platform.system.dto.LoginStatus">
+		UPDATE XT_LOGINSTATUS SET LASTLOGINTIME=#{lastlogintime, javaType=Date, jdbcType=BIGINT}, LASTIP=#{lastip, javaType=IP, jdbcType=INTEGER}, LASTSUCCESS=#{lastsuccess}, ENABLELOGINTIME=#{enablelogintime, javaType=Date, jdbcType=BIGINT}, LOGINFAILTIMES=#{loginfailtimes} WHERE LOGINSTATUSID=#{loginstatusid}
+	</update>
+
+</mapper>

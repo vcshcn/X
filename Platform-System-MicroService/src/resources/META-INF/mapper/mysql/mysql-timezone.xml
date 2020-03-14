@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.ITimeZoneDAO">
+
+	<cache />
+
+	<resultMap type="net.xway.platform.system.dto.TimeZone" id="TIMEZONE">
+		<id property="timezoneid" column="TIMEZONEID" />
+		<result property="name" column="NAME" />
+		<result property="gmt" column="GMT" />
+	</resultMap>
+
+	<select id="findByPrimaryKey" parameterType="int" resultMap="TIMEZONE">
+		SELECT TIMEZONEID, NAME, GMT FROM XT_TIMEZONE WHERE TIMEZONEID=#{timezoneid}
+	</select>
+
+	<select id="findAll"  resultMap="TIMEZONE">
+ 		SELECT TIMEZONEID, NAME, GMT FROM XT_TIMEZONE ORDER BY TIMEZONEID ASC
+	</select>
+	
+</mapper>

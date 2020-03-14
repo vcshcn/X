@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IViewDAO">
+	
+	<cache readOnly="true"/>
+	
+	<resultMap type="net.xway.platform.system.dto.View" id="VIEW">
+		<id property="viewid" column="VIEWID" />
+		<result property="name" column="NAME"/>
+		<result property="label" column="LABEL"/>
+<!--    <collection property="fields" column="VIEWID" javaType="java.util.List" ofType="net.xway.platform.system.dto.Field" select="net.xway.platform.system.dao.IFieldDAO.findAll" /> -->
+	</resultMap>
+
+	<select id="findViewByName" parameterType="string" resultMap="VIEW">
+		SELECT VIEWID, NAME, LABEL FROM XT_VIEW WHERE NAME=#{NAME}  
+ 	</select>
+ 	
+</mapper>

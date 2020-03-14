@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.xway</groupId>
+		<artifactId>platform-microservice-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>platform-microservice-system</artifactId>
+	<name>Platform-MicroService-System</name>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+		    <groupId>net.xway</groupId>
+		    <artifactId>api</artifactId>
+		    <version>${platform.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.xway</groupId>
+		    <artifactId>base</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+	</dependencies>
+	
+</project>

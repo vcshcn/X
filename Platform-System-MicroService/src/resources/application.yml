@@ -1,0 +1,24 @@
+server:
+  port: 9000
+  servlet:    context-path: /
+
+spring:
+  application:
+    name: Platform-MicroService-System
+  cloud:
+    zookeeper:
+      enabled: true
+      connect-string: 192.168.0.5:2181
+  datasource:
+      type: net.xway.base.database.datasource.SimpleDbcpDataSourceProxy
+      url: jdbc:mariadb://localhost:3306/XWAY?characterEncoding=UTF-8&useUnicode=true
+      username: root
+      password: 2pcXrhW5ZCc=
+      driverClassName: org.mariadb.jdbc.Driver
+      dbcp2:
+        testOnBorrow: false
+        testWhileIdle: true
+        validationQuery: SELECT 1
+mybatis:
+  config-location: classpath:sqlMapConfig.xml
+  mapper-locations: classpath*:/META-INF/mapper/mysql/**/mysql-*.xml

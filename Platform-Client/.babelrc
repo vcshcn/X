@@ -1,0 +1,13 @@
+{
+  "presets": [ "react",
+               [ "env", {
+                    "targets": {
+                      "browsers": ["last 1 Chrome version", "last 1 firefox version"]
+                    }
+                  }
+               ]
+  ],
+  "plugins": [
+    "syntax-dynamic-import"
+  ]
+}

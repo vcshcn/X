@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.ILoginDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Login" id="LOGIN">
+		<id property="loginid" column="LOGINID" />
+		<result property="userid" column="USERID" />
+		<result property="loginname" column="LOGINNAME" />
+		<result property="password" column="PASSWORD" />
+	</resultMap>
+	
+	 <select id="findByPrimaryKey" parameterType="int" resultMap="LOGIN">
+ 		SELECT LOGINID, LOGINNAME, PASSWORD, `LOCK` FROM XT_LOGIN WHERE LOGINID=#{loginid}
+ 	</select>
+
+ 	<insert id="insert" useGeneratedKeys="true" keyProperty="loginid">
+ 		INSERT INTO XT_LOGIN(LOGINID, LOGINNAME, PASSWORD, `LOCK`) VALUES( #{loginid}, #{loginname}, #{password}, #{lock})
+ 	</insert>
+ 	
+ 	<update id="update">
+ 		UPDATE XT_LOGIN SET LOGINNAME=#{loginname}, PASSWORD=#{password}, `LOCK`=#{lock} WHERE LOGINID=#{loginid}
+ 	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM XT_LOGIN WHERE LOGINID=#{loginid}
+	</delete>
+	
+ 	<select id="findLoginByLoginname" parameterType="string" resultMap="LOGIN">
+	 	SELECT A.* FROM XT_LOGIN A INNER JOIN XT_USER B ON A.LOGINID=B.USERID WHERE LOGINNAME=#{loginname}
+ 	</select>
+ 	
+	<update id="updateLoginPassword" >
+		UPDATE XT_LOGIN SET PASSWORD=#{password} WHERE LOGINID=#{loginid}
+	</update>
+
+</mapper>

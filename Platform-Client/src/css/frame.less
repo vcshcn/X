@@ -1,0 +1,27 @@
+@import "skin.less";
+
+:lang(zh_TW) {
+	font-family : Arial,PMingLiU;
+}
+
+:lang(zh_CN), :lang(zh) {
+	font-family : Arial,宋体;
+}
+
+:lang(en_US) {
+	font-family : Arial;
+}
+
+.MainFrame {
+
+    @import "frame-part.less";
+
+    .panel {
+        .borderlayout-main {
+            width: 100%;
+            border: none;
+        }
+    }
+
+}
+

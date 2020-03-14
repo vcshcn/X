@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.ICustomizeDAO">
+	
+
+	<select id="findByPrimaryKey" parameterType="int" resultType="net.xway.platform.system.dto.Customize">
+		SELECT CUSTOMIZEID, DATEFORMAT, TIMEFORMAT, DATETIMEFORMAT, PAGESIZE, STYLE FROM XT_CUSTOMIZE WHERE CUSTOMIZEID=#{id}
+ 	</select>
+
+ 	<insert id="insert" parameterType="net.xway.platform.system.dto.Customize" useGeneratedKeys="true" keyProperty="customizeid">
+ 		INSERT INTO XT_CUSTOMIZE(DATEFORMAT, TIMEFORMAT, DATETIMEFORMAT, PAGESIZE, STYLE) VALUES(#{dateformat}, #{timeformat}, #{datetimeformat}, #{pagesize}, #{style} )
+ 	</insert>
+
+ 	<update id="update" parameterType="net.xway.platform.system.dto.Customize">
+ 		UPDATE XT_CUSTOMIZE SET DATEFORMAT=#{dateformat}, TIMEFORMAT=#{timeformat}, DATETIMEFORMAT=#{datetimeformat}, PAGESIZE=#{pagesize}, STYLE=#{style} WHERE CUSTOMIZEID=#{customizeid} 
+ 	</update>
+
+</mapper>

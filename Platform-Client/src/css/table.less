@@ -1,0 +1,138 @@
+@import (reference) "skin.less";
+
+.DataTable {
+    width: 100%;
+    font-size : 18px;
+    color: black;
+
+    .ModifyButton {
+        background-image: url(./images/edit.png);
+    }
+
+    .DeleteButton {
+        background-image: url(./images/delete.png);
+    }
+
+    .PickupButton {
+        background-image: url(./images/pickup.png);
+    }
+
+    .OperateButton {
+        background-repeat: no-repeat;
+        background-position:left;
+        background-size: contain;
+        padding-left: 20px;
+        padding-right: 10px;
+        white-space:nowrap;
+        cursor: pointer;
+    }
+
+    section {
+        width:100%;
+        clear:both;
+
+        a {
+            .normalbutton;
+        }
+
+        div {
+            &:first-child {
+                margin-left: 20px;
+                float:left;
+            }
+            &:last-child {
+                margin-right: 20px;
+                float:right;
+            }
+        }
+    }
+
+    table {
+        width:100%;
+        border-collapse: separate;
+        border-spacing:2px;
+        word-wrap: anywhere;
+
+        caption {
+            border-bottom: 1px #ABC7D6 solid;
+            background-color: #bad7e6;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            border-bottom: 1px #ABC7D6 solid;
+            text-shadow: 1px 1px #dceef7;
+            font-weight:bold;
+            text-align:left;
+            padding-left: 20px;
+            padding-bottom:0;
+            margin: 0;
+        }
+
+        thead {
+            color: #535e66;
+            background: #dde8f0;
+            text-shadow: 1px 1px #f2f8fc;
+            margin: 0;
+
+            th {
+                border: 0;
+                margin:0;
+                padding:0;
+
+                &:nth-child(2) {
+                    text-align:left;
+                    font-weight:bold;
+                }
+            }
+        }
+
+        tr {
+            td {
+                padding: 3px;
+                line-height:30px;
+                overflow:hidden;
+                text-overflow:ellipsis;
+
+                &:first-child {
+                    text-align:center;
+                }
+                &:nth-child(2) {
+                    text-align:left;
+                    font-weight:bold;
+                }
+
+            }
+
+        }
+
+        tbody {
+            tr {
+                &:nth-child(odd) {
+                    background: #f4f9fd;
+                }
+                &:nth-child(even) {
+                    background: #fcfdfe;
+                }
+                &:hover {
+                    background: #dde8f0;
+                }
+            }
+
+            .name {
+                text-decoration: none;
+                color: #3333FF;
+                cursor: pointer;
+            }
+        }
+    }
+
+    footer {
+        background: #dde8f0;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        text-align:center;
+
+        a {
+            .normalbutton;
+        }
+    }
+}

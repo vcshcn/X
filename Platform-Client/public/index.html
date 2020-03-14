@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta name="keywords" content="XWAY" />
+<meta name="description" content="XWAY Project" />
+<title>Administrator Console</title>
+<link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+<script>
+String.prototype.isAlpha = function() {
+    return this.length ==1 && ( (this>='a' && this<='z') || (this>='A' && this<='Z'));
+}
+
+String.prototype.isDigit = function() {
+    return this.length ==1 && parseInt(this) >=0 && parseInt(this) <= 9;
+}
+
+
+
+Date.prototype.incYear = function() {
+    let d = new Date(this.getTime());
+    d.setFullYear(this.getFullYear()+1);
+    return d;
+}
+
+Date.prototype.decYear = function() {
+    let d = new Date(this.getTime());
+    d.setFullYear(this.getFullYear()-1);
+    return d;
+}
+
+Date.prototype.incMonth = function() {
+    let d = new Date(this.getTime());
+    d.setMonth(this.getMonth()+1);
+    return d;
+}
+
+Date.prototype.decMonth = function() {
+    let d = new Date(this.getTime());
+    d.setMonth(this.getMonth()-1);
+    return d;
+}
+
+
+Date.prototype.incDate = function() {
+    let d = new Date(this.getTime());
+    d.setDate(this.getDate()+1);
+    return d;
+}
+
+Date.prototype.decDate = function() {
+    let d = new Date(this.getTime());
+    d.setDate(this.getDate()-1);
+    return d;
+}
+
+Date.prototype.equals = function(d2) {
+    return d2 && this.getFullYear() == d2.getFullYear() && this.getMonth() == d2.getMonth() && this.getDate() == d2.getDate();
+}
+
+Date.prototype.FormatDate = function(format) {
+	var year = this.getFullYear() + "";
+	var month = (this.getMonth()+1) + "";
+	var day = this.getDate() + "";
+	
+	var year_index = year.length - 1;
+	var month_index = month.length - 1;
+	var day_index = day.length - 1;
+
+	var format = format.toLowerCase();
+	var val = "";
+
+	for (var i=format.length-1; i>=0; i--) {
+		var ch = format.charAt(i);
+
+		if (ch == 'd') {
+			val = ( day_index < 0 ? "0" : day.charAt(day_index) ) + val;
+			day_index--;
+		}
+		else if (ch == 'm') {
+			val = ( month_index < 0 ? "0" : month.charAt(month_index) ) + val;
+			month_index--;
+		}
+		else if (ch == 'y') {
+			val = ( year_index < 0 ? "0" : year.charAt(year_index) ) + val;
+			year_index--;
+		}
+		else {
+			val = ch + val;
+		}
+	}
+	return val;
+};
+
+Date.prototype.FormatTime = function(format) {
+	var hour = this.getHours() + "";
+	var minute = this.getMinutes() + "";
+	var second = this.getSeconds() + "";
+	
+	var hour_index = hour.length - 1;
+	var minute_index = minute.length - 1;
+	var second_index = second.length - 1;
+
+	var format = format.toLowerCase();
+	var val = "";
+
+	for (var i=format.length-1; i>=0; i--) {
+		var ch = format.charAt(i);
+
+		if (ch == 's') {
+			val = ( second_index < 0 ? "0" : second.charAt(second_index) ) + val;
+			second_index--;
+		}
+		else if (ch == 'm') {
+			val = ( minute_index < 0 ? "0" : minute.charAt(minute_index) ) + val;
+			minute_index--;
+		}
+		else if (ch == 'h') {
+			val = ( hour_index < 0 ? "0" : hour.charAt(hour_index) ) + val;
+			hour_index--;
+		}
+		else {
+			val = ch + val;
+		}
+	}
+	return val;
+};
+</script>
+</head>
+<body style="background: #F5F5F5">
+  <noscript>
+    You need to enable JavaScript to visit this site.
+  </noscript>
+  <div id="app"></div>
+</body>
+</html>

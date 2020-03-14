@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IUserDAO">
+
+	<resultMap type="net.xway.platform.system.dto.User" id="USER">
+		<id property="userid" column="USERID" />
+		<result property="type" column="TYPE" />
+		<result property="name" column="NAME" />
+		<result property="gender" column="GENDER" />
+		<result property="nickname" column="NICKNAME" />
+		<result property="birthday" column="BIRTHDAY" />
+		<result property="tel" column="TEL" />
+		<result property="mobile" column="MOBILE" />
+		<result property="address" column="ADDRESS" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="email" column="EMAIL" />
+		<result property="homepage" column="HOMEPAGE" />
+		<result property="photo" column="PHOTO" />
+		<result property="aboutme" column="ABOUTME" />
+		
+		<association property="login" column="USERID" javaType="net.xway.platform.system.dto.Login">
+			<id property="loginid" column="LOGINID"/>
+			<result property="loginname" column="LOGINNAME"/>
+			<result property="lock" column="LOCK"/>
+		</association>
+
+		<association property="role" column="ROLEID" javaType="net.xway.platform.system.dto.Role">
+			<id property="roleid" column="ROLEID"/>
+			<result property="name" column="ROLENAME"/>
+			<result property="description" column="ROLEDESCRIPTION"/>
+			
+			<collection property="privileges" column="ROLEID" ofType="net.xway.platform.system.dto.Privilege" javaType="java.util.List" select="net.xway.platform.system.dao.IPrivilegeDAO.findPrivilegeByRoleID"/>
+			<collection property="menus" column="ROLEID" ofType="net.xway.platform.system.dto.Menu" javaType="java.util.List" select="net.xway.platform.system.dao.IMenuDAO.findMenuByRoleID"/>
+		</association>
+
+		<association property="country" column="COUNTRYID" javaType="net.xway.platform.system.dto.Country">
+			<id property="countryid" column="COUNTRYID"/>
+			<result property="name" column="COUNTRYNAME"/>
+			<result property="code2" column="CODE2"/>
+			<result property="code3" column="CODE3"/>
+			<result property="telphonecode" column="TELPHONECODE"/>
+			<result property="currency" column="CURRENCY"/>
+
+			<association property="continent" column="CONTINENTID" javaType="net.xway.platform.system.dto.Continent">
+				<id property="continentid" column="CONTINENTID"/>
+				<result property="name" column="CONTINENTNAME"/>
+				<result property="code" column="CODE"/>
+			</association>
+		</association>
+		
+		<association property="locale" column="LOCALEID" javaType="net.xway.platform.system.dto.Locale">
+			<id property="localeid" column="LOCALEID"/>
+			<result property="name" column="LOCALENAME"/>
+			<result property="language" column="LANGUAGE"/>
+			<result property="country" column="COUNTRY"/>
+		</association>
+
+		<association property="timezone" column="TIMEZONEID" javaType="net.xway.platform.system.dto.TimeZone">
+			<id property="timezoneid" column="TIMEZONEID"/>
+			<result property="name" column="TIMEZONENAME"/>
+			<result property="gmt" column="GMT"/>
+		</association>
+
+		<association property="customize" column="TIMEZONEID" javaType="net.xway.platform.system.dto.Customize">
+			<id property="customizeid" column="CUSTOMIZEID"/>
+			<result property="dateformat" column="DATEFORMAT"/>
+			<result property="timeformat" column="TIMEFORMAT"/>
+			<result property="datetimeformat" column="DATETIMEFORMAT"/>
+			<result property="pagesize" column="PAGESIZE"/>
+			<result property="style" column="STYLE"/>
+		</association>
+
+		<collection property="toolboxs" column="USERID" javaType="java.util.List" ofType="net.xway.platform.system.dto.ToolBox" select="net.xway.platform.system.dao.IToolBoxDAO.findSelectedToolBoxByUserID" />
+
+	</resultMap>
+
+	<select id="findByPrimaryKey" parameterType="int" resultMap="USER">
+		SELECT * FROM XV_USER WHERE BDELETE=0 AND USERID=#{userid}
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="userid" parameterType="net.xway.platform.system.dto.User">
+		INSERT INTO XT_USER(TYPE, NAME, NICKNAME, BIRTHDAY, TEL, EMAIL, ADDRESS, ZIPCODE, HOMEPAGE,	GENDER, ROLEID, COUNTRYID, CUSTOMIZEID) VALUES(#{type}, #{name}, #{nickname}, #{birthday,jdbcType=TIMESTAMP}, #{tel}, #{email}, #{address}, #{zipcode},#{homepage}, #{gender}, #{role.roleid},#{country.countryid}, #{customize.customizeid} )
+	</insert>
+	
+	<update id="update" parameterType="net.xway.platform.system.dto.User">
+		UPDATE XT_USER SET 
+		NAME=#{name,jdbcType=CHAR} , 
+		NICKNAME=#{nickname,jdbcType=CHAR}, 
+		BIRTHDAY=#{birthday,jdbcType=TIMESTAMP}, 
+		TEL=#{tel,jdbcType=CHAR}, 
+		EMAIL=#{email,jdbcType=CHAR}, 
+		ADDRESS=#{address,jdbcType=CHAR}, 
+		ZIPCODE=#{zipcode,jdbcType=CHAR}, 
+		HOMEPAGE=#{homepage,jdbcType=CHAR},	
+		GENDER=#{gender,jdbcType=CHAR}, 
+		ROLEID=#{role.roleid} 
+		WHERE USERID=#{userid}
+	</update>
+
+	<delete id="delete">
+		UPDATE XT_USER SET BDELETE=#{bdelete} WHERE USERID=#{userid} 
+	</delete>
+
+	<select id="findUserByName" parameterType="string" resultMap="USER">
+		SELECT * FROM XV_USER WHERE BDELETE=0 AND NAME=#{name}
+ 	</select>
+
+	<update id="saveProfile">
+		UPDATE XT_USER SET 
+		NICKNAME=#{nickname,jdbcType=CHAR}, 
+		BIRTHDAY=#{birthday,jdbcType=TIMESTAMP}, 
+		TEL=#{tel,jdbcType=CHAR}, 
+		EMAIL=#{email,jdbcType=CHAR}, 
+		ADDRESS=#{address,jdbcType=CHAR}, 
+		ZIPCODE=#{zipcode,jdbcType=CHAR}, 
+		HOMEPAGE=#{homepage,jdbcType=CHAR},
+		MOBILE=#{mobile,jdbcType=CHAR},
+		COUNTRYID=#{countryid},
+		LOCALEID=#{localeid},
+		TIMEZONEID=#{timezoneid}
+		WHERE USERID=#{userid}
+	</update>
+
+
+</mapper>
+

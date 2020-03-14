@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IResourceDAO">
+	
+	<cache readOnly="true"/>
+	
+	<resultMap type="net.xway.platform.system.dto.Resource" id="RESOURCE">
+		<id property="resourceid" column="RESOURCEID"/>
+		<result property="link" column="LINK"/>
+		<result property="label" column="LABEL" />
+		<result property="description" column="DESCRIPTION"/>
+		<result property="canmenu" column="CANMENU" />
+		<result property="stay" column="STAY" />
+		<association property="privilege" column="PRIVILEGEID" javaType="net.xway.platform.system.dto.Privilege">
+			<id property="privilegeid" column="PRIVILEGEID"/>
+			<result property="name" column="NAME"/>
+			<result property="description" column="DESCRIPTION"/>
+		</association>
+	</resultMap>
+	
+	<select id="findByPrimaryKey" parameterType="int" resultMap="RESOURCE">
+		SELECT A.RESOURCEID, A.LINK, A.LABEL, A.DESCRIPTION, A.CANMENU, A.PRIVILEGEID, A.STAY,B.NAME, B.DESCRIPTION FROM XT_RESOURCE A LEFT JOIN XT_PRIVILEGE B ON A.PRIVILEGEID = B.PRIVILEGEID WHERE A.RESOURCEID=#{resourceid}
+	</select>
+
+	<select id="findResourceByLink" parameterType="string" resultMap="RESOURCE">
+		SELECT A.RESOURCEID, A.LINK, A.LABEL, A.DESCRIPTION, A.CANMENU, A.PRIVILEGEID, A.STAY,B.NAME, B.DESCRIPTION FROM XT_RESOURCE A LEFT JOIN XT_PRIVILEGE B ON A.PRIVILEGEID = B.PRIVILEGEID WHERE A.LINK=#{link}
+ 	</select>
+ 	
+ 	<sql id="findPageResourceWhere">
+		<where> 
+			<if test="canmenu != null">CANMENU=#{canmenu} AND </if> 
+			<if test="label != null">LABEL=#{label} AND </if> 
+			1=1
+		</where>	
+	</sql>
+ 	
+ 	<select id="findPage" parameterType="java.util.Map" resultMap="RESOURCE" >
+ 		SELECT * FROM XT_RESOURCE <include refid="findPageResourceWhere"/> LIMIT #{OFFSET}, #{ROWS}
+ 	</select>
+ 	
+ 	<select id="findCount" parameterType="java.util.Map" resultType="int">
+ 		SELECT COUNT(*) FROM XT_RESOURCE <include refid="findPageResourceWhere"/>
+ 	</select>
+ 	
+</mapper>

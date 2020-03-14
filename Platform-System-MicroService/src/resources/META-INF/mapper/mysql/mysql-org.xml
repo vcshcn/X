@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IOrgDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Org" id="ORG">
+		<id property="orgid" column="ORGID" />
+		<result property="name" column="NAME" />
+		<result property="address" column="ADDRESS" />
+		<result property="tel" column="TEL" />
+		<result property="description" column="DESCRIPTION" />
+	</resultMap>
+	
+	<select id="findByPrimaryKey" parameterType="int" resultMap="ORG">
+		SELECT ORGID, NAME, ADDRESS, TEL, DESCRIPTION FROM XT_ORG WHERE ORGID=#{orgid}
+	</select>
+
+ 	<select id="findPage" parameterType="java.util.Map" resultMap="ORG" >
+ 		SELECT ORGID, NAME, ADDRESS, TEL, DESCRIPTION FROM XT_ORG WHERE BDELETE=0 <if test="name != null">AND NAME=#{name}</if> LIMIT #{OFFSET}, #{ROWS}
+ 	</select>
+
+	<select id="findCount" parameterType="java.util.Map" resultType="int">
+ 		SELECT COUNT(*) FROM XT_ORG WHERE BDELETE=0 <if test="name != null">AND NAME=#{name}</if>
+ 	</select>
+
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="orgid" parameterType="net.xway.platform.system.dto.Org" >
+		INSERT INTO XT_ORG(NAME, TEL, ADDRESS, DESCRIPTION) VALUES(#{name}, #{tel}, #{address}, #{description})
+	</insert>
+	
+	<update id="update">
+		UPDATE XT_ORG SET NAME=#{name}, TEL=#{tel}, ADDRESS=#{address}, DESCRIPTION=#{description} WHERE ORGID=#{orgid}
+	</update>
+	
+	<delete id="delete"  parameterType="int">
+		UPDATE XT_ORG SET BDELETE=1 WHERE ORGID=#{orgid}
+	</delete>
+	
+</mapper>

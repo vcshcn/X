@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IPrivilegeDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Privilege" id="PRIVILEGE">
+		<id property="privilegeid" column="PRIVILEGEID" />
+		<result property="name" column="NAME" />
+		<result property="description" column="DESCRIPTION" />
+	</resultMap>
+
+	<select id="findPrivilegeByRoleID" resultMap="PRIVILEGE">
+		SELECT A.PRIVILEGEID, A.NAME, A.DESCRIPTION FROM XT_PRIVILEGE A INNER JOIN XT_ROLEPRIVILEGE B ON A.PRIVILEGEID = B.PRIVILEGEID WHERE B.ROLEID=#{roleid}
+	</select>
+
+	<select id="findAll" resultMap="PRIVILEGE">
+		SELECT PRIVILEGEID, NAME, DESCRIPTION FROM XT_PRIVILEGE ORDER BY PRIVILEGEID
+	</select>
+
+	<select id="findWithoutPrivilegeByRole" parameterType="int" resultMap="PRIVILEGE">
+		SELECT * FROM XT_PRIVILEGE A WHERE NOT EXISTS (SELECT 1 FROM XT_ROLEPRIVILEGE B WHERE A.PRIVILEGEID = B.PRIVILEGEID AND B.ROLEID=#{roleid}) 
+	</select>
+
+	<insert id="insertRolePrivilege">
+		INSERT INTO XT_ROLEPRIVILEGE(ROLEID, PRIVILEGEID) VALUES <foreach collection="privilegeid" item="p" index="index" separator=",">(#{roleid}, #{p}) </foreach>
+	</insert>
+
+	<delete id="deleteByRoleID" parameterType="int">
+		DELETE FROM XT_ROLEPRIVILEGE WHERE ROLEID=#{roleid}
+	</delete>
+	
+</mapper>

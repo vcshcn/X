@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IDepartmentDAO">
+
+	<resultMap type="net.xway.platform.system.dto.Department" id="DEPARTMENT">
+		<id property="departmentid" column="DEPARTMENTID"/>
+		<result property="name" column="NAME"/>
+		<result property="description" column="DESCRIPTION"/>
+		<result property="tel" column="TEL"/>
+		
+		<association property="org" column="orgid" javaType="net.xway.platform.system.dto.Org" >
+			<id property="orgid" column="ORGID"/>
+			<result property="name" column="ORGNAME"/>
+			<result property="tel" column="ORGTEL"/>
+			<result property="address" column="ADDRESS"/>
+			<result property="description" column="ORGDESCRIPTION"/>
+		</association>
+
+		<association property="parent" column="parentid" javaType="net.xway.platform.system.dto.Department" >
+			<id property="departmentid" column="PARENTID"/>
+			<result property="name" column="PARENTNAME"/>
+			<result property="description" column="PARENTDESCRIPTION"/>
+			<result property="tel" column="PARENTTEL"/>
+		</association>
+	</resultMap>
+	
+	<select id="findByPrimaryKey" parameterType="int" resultMap="DEPARTMENT">
+		SELECT A.*, B.NAME PARENTNAME, B.DESCRIPTION PARENTDESCRIPTION, B.TEL PARENTTEL FROM (
+			SELECT XT_DEPARTMENT.*, XT_ORG.NAME ORGNAME, XT_ORG.ADDRESS, XT_ORG.TEL ORGTEL, XT_ORG.DESCRIPTION ORGDESCRIPTION, XT_ORG.BDELETE ORGBDELETE FROM XT_DEPARTMENT INNER JOIN XT_ORG ON XT_DEPARTMENT.ORGID=XT_ORG.ORGID WHERE DEPARTMENTID=#{departmentid}
+		) A LEFT JOIN XT_DEPARTMENT B ON A.PARENTID=B.DEPARTMENTID
+	</select>
+
+	<sql id="findPageDepartmentWhere">
+		WHERE XT_DEPARTMENT.BDELETE=0 
+		<if test="name != null">AND XT_DEPARTMENT.NAME=#{name}</if>
+		<if test="orgid != null">AND XT_DEPARTMENT.ORGID=#{orgid}</if>
+		<if test="parentid != null">AND XT_DEPARTMENT.PARENTID=#{parentid}</if>
+	</sql>
+	
+ 	<select id="findPage" parameterType="java.util.Map" resultMap="DEPARTMENT" >
+ 		SELECT A.*, B.NAME PARENTNAME, B.DESCRIPTION PARENTDESCRIPTION, B.TEL PARENTTEL FROM (
+			SELECT XT_DEPARTMENT.*, XT_ORG.NAME ORGNAME, XT_ORG.ADDRESS, XT_ORG.TEL ORGTEL, XT_ORG.DESCRIPTION ORGDESCRIPTION, XT_ORG.BDELETE ORGBDELETE FROM XT_DEPARTMENT INNER JOIN XT_ORG ON XT_DEPARTMENT.ORGID=XT_ORG.ORGID <include refid="findPageDepartmentWhere"/> LIMIT #{OFFSET}, #{ROWS}
+		) A LEFT JOIN XT_DEPARTMENT B ON A.PARENTID=B.DEPARTMENTID
+ 	</select>
+
+	<select id="findCount" parameterType="java.util.Map" resultType="int">
+ 		SELECT COUNT(*) FROM XT_DEPARTMENT INNER JOIN XT_ORG ON XT_DEPARTMENT.ORGID=XT_ORG.ORGID <include refid="findPageDepartmentWhere"/>
+ 	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="departmentid" parameterType="net.xway.platform.system.dto.Department">
+		INSERT INTO XT_DEPARTMENT(ORGID, PARENTID, NAME, TEL, DESCRIPTION) VALUES(#{org.orgid}, #{parent.departmentid}, #{name}, #{tel}, #{description})
+	</insert>
+	
+	<update id="update">
+		UPDATE XT_DEPARTMENT SET ORGID=#{org.orgid}, NAME=#{name}, TEL=#{tel}, DESCRIPTION=#{description}, PARENTID=#{parent.departmentid} WHERE DEPARTMENTID=#{departmentid}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		UPDATE XT_DEPARTMENT SET BDELETE=1 WHERE DEPARTMENTID=#{departmentid}
+	</delete>
+
+	<!--
+		FOR TREE
+	-->
+	<select id="findRootDepartmentByOrgID" parameterType="int" resultMap="DEPARTMENT">
+		SELECT * FROM XT_DEPARTMENT WHERE PARENTID IS NULL AND ORGID=#{orgid}
+	</select>
+	
+	<select id="findDepartmentByParentID" parameterType="int" resultMap="DEPARTMENT">
+		SELECT * FROM XT_DEPARTMENT WHERE PARENTID=#{departmentid}
+	</select>
+		
+</mapper>

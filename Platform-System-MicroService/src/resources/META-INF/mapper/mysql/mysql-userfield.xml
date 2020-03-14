@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.IUserFieldDAO">
+	
+	<resultMap type="net.xway.platform.system.dto.Field" id="FIELD">
+		<id property="fieldid" column="FIELDID" />
+		<result property="name" column="NAME" />
+		<result property="label" column="LABEL" />
+		<result property="type" column="TYPE" />
+		<result property="ognl" column="OGNL" />
+		<result property="format" column="FORMAT" />
+		<result property="enumname" column="ENUMNAME" />
+		<result property="size" column="SIZE" />
+		<result property="nullable" column="NULLABLE" />
+		<result property="isSearchField" column="ISSEARCHFIELD" typeHandler="BooleanTypeHandler"/>
+		<result property="displayIndex" column="DISPLAYINDEX"/>
+		<result property="sortIndex" column="SORTINDEX" />
+		<result property="width" column="WIDTH" />
+	</resultMap>
+ 	
+ 	<insert id="insertNotDisplayUserFields" useGeneratedKeys="true">
+ 		INSERT INTO XT_USEREXCLUDEFIELD(USERID, VIEWID, FIELDID) VALUE <foreach collection="fieldids" item="id" separator=",">(#{userid},#{viewid},#{id})</foreach>
+ 	</insert>
+
+	<delete id="deleteNotDisplayUserFields">
+		DELETE FROM XT_USEREXCLUDEFIELD WHERE USERID=#{userid} AND VIEWID=#{viewid}
+	</delete>
+</mapper>

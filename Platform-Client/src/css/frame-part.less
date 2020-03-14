@@ -1,0 +1,124 @@
+.banner {
+    width : 100%;
+    margin:0;
+
+    .left {
+        float: left;
+    }
+
+    .center {
+        float: left;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .title {
+        margin:2px 2px 2px 20px;
+        padding:0;
+    }
+
+}
+
+.menubar {
+    margin:3;
+
+    li {
+        list-style: none;
+        display: inline;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .menubar1 {
+        margin:0;
+        
+        li {
+            padding: 5px 5mm 2px 5mm;
+            margin-right: 5px;
+            background-color: var(--MenuLevel1_Item_Background);
+            border-top-left-radius:6px;
+            border-top-right-radius:6px;
+    
+            a {
+                color: var(--MenuLevel1_Text_Color);
+            }
+    
+            &:hover {
+                background-color: var(--MenuLevel1_Text_HoverColor) ;
+            }
+        }
+    
+        .active {
+            background-color: var(--MenuLevel1_Text_HoverColor) ;
+        }
+    }
+    
+    .menubar2 {
+        margin-top :0;
+        padding: 5px;
+        width: 99%;
+        background-color: var(--MenuLevel2_Item_Background);
+        
+        li {
+            padding: 5px 0 5px 20px;
+            margin-right: 5px;
+    
+            a {
+                font-size:18px;
+                color:var(--MenuLevel2_Text_Color);
+    
+                &:hover {
+                    color:var(--MenuLevel2_Text_HoverColor);
+                    background-color: var(--MenuLevel2_Text_HoverBackground);
+                    border-radius:5px;
+                }
+            }
+        }
+    
+        .active {
+            color:var(--MenuLevel2_Text_HoverColor);
+            background-color:var(--MenuLevel2_Text_HoverBackground);
+            border-radius:5px;
+        }
+    }
+}
+
+.toolbox {
+    text-align: right;
+    margin-right: 25px;
+
+    a {
+        cursor: pointer;
+    }
+
+    .ToolBox-Tool {
+        width: 48px;
+        height: 48px;
+        margin-right: 5px;
+    }
+    
+    .title {
+        background-color: #bad7e6;
+        border-radius: 10px;
+        color: #22425e;
+        font-size: 18px;
+        font-weight: bold;
+        text-shadow: 1px 1px #dceef7;
+        padding: 2px 7px 2px 7px;
+        margin-bottom: 10px;
+        overflow: hidden;
+    }
+    
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: large;
+    font-family:'arial';
+    color: #333333;
+    text-align: center;
+}

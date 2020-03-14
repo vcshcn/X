@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.platform.system.dao.ILocaleDAO">
+
+	<cache />
+
+	<resultMap type="net.xway.platform.system.dto.Locale" id="LOCALE">
+		<id property="localeid" column="LOCALEID" />
+		<result property="name" column="NAME" />
+		<result property="language" column="LANGUAGE" />
+		<result property="country" column="COUNTRY" />
+	</resultMap>
+
+	<select id="findByPrimaryKey" parameterType="int" resultMap="LOCALE">
+		SELECT * FROM XT_LOCALE WHERE LOCALEID=#{localeid}
+	</select>
+
+	<select id="findAll" resultMap="LOCALE">
+ 		SELECT * FROM XT_LOCALE
+	</select>
+</mapper>
