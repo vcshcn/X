@@ -1,0 +1,30 @@
+package ${context.packageName};
+
+import ${context.dto.fullClassName};
+import ${context.iservice.fullClassName};
+
+import com.opensymphony.xwork2.ActionSupport;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Controller("${context.className}")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class ${context.className} extends ActionSupport {
+	
+	// input
+	private Integer ${context.dto.primaryKey.propertyName};
+	
+	// output
+	private ${context.dto.className} ${context.dto.propertyName};
+	
+	@Override
+	public String execute() throws Exception  {
+		${context.dto.propertyName} = ${context.iservice.propertyName}.find${context.dto.name}ByID(${context.dto.primaryKey.propertyName});
+		return SUCCESS;
+	}
+
+	@Autowired
+	private ${context.iservice.className} ${context.iservice.propertyName};	
+}

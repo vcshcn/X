@@ -1,0 +1,27 @@
+package ${context.packageName};
+
+#foreach($import in ${context.imports})
+#if (${import.packageName} && ${import.packageName} != 'java.lang')
+import ${import.fullClassName};
+#end
+#end
+
+
+public class ${context.className} {
+	#foreach($field in ${context.fields})
+
+	private ${field.type.className} ${field.propertyName};
+	#end
+	
+	#foreach($field in ${context.fields})
+
+	public void ${field.setMethodName}($field.type.className ${field.propertyName}) {
+		this.${field.propertyName} = ${field.propertyName};
+	}
+	
+	public ${field.type.className} ${field.getMethodName}() {
+		return ${field.propertyName};
+	}
+	#end
+	
+}

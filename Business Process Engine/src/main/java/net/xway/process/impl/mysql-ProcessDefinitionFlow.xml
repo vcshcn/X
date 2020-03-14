@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.process.impl.repository.dao.IProcessDefinitionFlowDAO">
+
+	<resultMap type="net.xway.process.def.AbstractFlow" id="AbstractFlow">
+		<id property="processDefinitionFlowID" column="PROCESSDEFINITIONFLOWID" />
+		<result property="key" column="KEY" />
+		<result property="name" column="NAME" />
+		<result property="description" column="DESCRIPTION" />
+
+		<association property="source" column="SOURCEID" select="net.xway.process.impl.repository.dao.IProcessDefinitionNodeDAO.findByPrimaryKey"/>
+		<association property="target" column="TARGETID" select="net.xway.process.impl.repository.dao.IProcessDefinitionNodeDAO.findByPrimaryKey"/>
+
+		
+		<discriminator column="TYPE" javaType="string">
+			<case value="SequenceFlow" resultMap="SequenceFlow" />
+		</discriminator>
+	</resultMap>
+
+	<resultMap type="net.xway.process.def.SequenceFlow" id="SequenceFlow" extends="AbstractFlow">
+	</resultMap>
+
+ 	<select id="findFlowsBySourceNode" parameterType="int"  resultMap="AbstractFlow" >
+		SELECT * FROM XT_PROCESSDEFINITIONFLOW WHERE SOURCEID=#{processdefinitionnodeid}
+ 	</select>
+
+ 	<select id="findFlowsByTargetNode" parameterType="int"  resultMap="AbstractFlow" >
+		SELECT * FROM XT_PROCESSDEFINITIONFLOW WHERE TARGETID=#{processdefinitionnodeid}
+ 	</select>
+
+</mapper>

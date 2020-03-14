@@ -1,0 +1,6 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="/include/global.jsp" %>
+<%@ taglib prefix="xway" uri="/xway-tags"%>
+
+
+<xway:Table view="${context.component.name}" data="${page}"/>

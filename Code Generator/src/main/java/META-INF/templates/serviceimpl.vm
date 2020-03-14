@@ -1,0 +1,59 @@
+package ${context.packageName};
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import net.xway.base.utils.PageResult;
+import net.xway.base.utils.Query;
+import ${context.iservice.fullClassName};
+#foreach ($idao in ${context.idaos})
+import ${idao.fullClassName};
+#end
+#foreach ($idao in ${context.idaos})
+import ${idao.dto.fullClassName};
+#end
+
+@Service("${context.humanName}")
+public class ${context.className} implements ${context.iservice.className} {
+	
+	#foreach ($dao in ${context.idaos})
+	
+	@Autowired
+	private ${dao.className} ${dao.propertyName};
+	#end
+	
+	#foreach ($dto in ${context.iservice.dtos})
+	
+	@Override
+	public ${dto.className} find${dto.name}ByID(int ${dto.primaryKey.propertyName}) {
+		return ${dto.propertyName}DAO.findByPrimaryKey(${dto.primaryKey.propertyName});
+	}
+	
+	@Override
+	public List<${dto.className}> findAll${dto.name}() {
+		return ${dto.propertyName}DAO.findAll();
+	}
+
+	@Override
+	public PageResult<${dto.name}> find${dto.name}Page(Query q) {
+		return ${dto.propertyName}DAO.findPage(q);
+	}
+	
+	@Override
+	public void save${dto.name}(${dto.className} ${dto.propertyName}) {
+		if (${dto.propertyName}.${dto.primaryKey.getMethodName}() == null) {
+			${dto.propertyName}DAO.insert(${dto.lowerCaseName});
+		}
+		else {
+			${dto.propertyName}DAO.update(${dto.lowerCaseName});
+		}
+	}
+	
+	@Override
+	public void delete${dto.name}(int ${dto.primaryKey.propertyName}) {
+		${dto.propertyName}DAO.delete(${dto.primaryKey.propertyName});
+	}
+	#end
+
+	
+}

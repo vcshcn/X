@@ -1,0 +1,25 @@
+package ${context.packageName};
+
+import java.util.List;
+#foreach ($dto in ${context.dtos})
+import ${dto.fullClassName};
+#end
+import net.xway.base.utils.PageResult;
+import net.xway.base.utils.Query;
+
+public interface ${context.className} {
+	
+	#foreach ($dto in ${context.dtos})
+	
+	public ${dto.className} find${dto.name}ByID(int ${dto.primaryKey.propertyName});
+
+	public List<${dto.className}> findAll${dto.name}();	
+
+	public PageResult<${dto.name}> find${dto.name}Page(Query q);
+	
+	public void save${dto.name}(${dto.className} ${dto.propertyName});
+	
+	public void delete${dto.name}(int ${dto.primaryKey.propertyName});
+	#end
+
+}

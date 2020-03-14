@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.process.impl.repository.dao.ITaskDAO">
+
+
+	<resultMap type="net.xway.process.def.Task" id="TASK">
+		<id property="taskid" column="TASKID" />
+	</resultMap>
+
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="taskid" parameterType="net.xway.process.def.Task" >
+		INSERT INTO XT_TASK(PROCESSINSTANCEID, NAME, DESCRIPTION, CREATETIME) VALUES( #{instance.processInstanceID}, #{name}, #{description}, #{createtime})
+	</insert>
+	
+</mapper>

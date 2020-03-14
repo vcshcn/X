@@ -1,0 +1,38 @@
+#set($ObjectName = ${context.dao.dto.name})
+#set($ClassName = ${context.dao.dto.fullClassName})
+#set($PrimaryKeyName = ${context.dao.dto.primaryKey.propertyName})
+#set($TableName = ${context.dao.dto.uppercaseName})
+#set($TableNameID = ${context.dao.dto.uppercaseName}+"ID")
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="${context.dao.fullClassName}">
+
+	<resultMap type="$ClassName" id="$TableName">
+		$SQLTool.getResult(${context.dao.dto})
+	</resultMap>
+
+	<select id="findByPrimaryKey" parameterType="int">
+		$SQLTool.getFindByIDSQL(${context.dao.dto})
+	</select> 
+
+	<select id="findPage" parameterType="java.util.Map" resultMap="${TableName}">
+ 		$SQLTool.getFindByPage(${context.dao.dto})
+	</select> 
+
+	<select id="findCount" parameterType="java.util.Map" resultType="int">
+		$SQLTool.getFindByCount(${context.dao.dto})
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="${PrimaryKeyName}" parameterType="${ClassName}">
+		$SQLTool.getInsert(${context.dao.dto})
+	</insert>
+
+	<update id="update" parameterType="${ClassName}">
+		$SQLTool.getUpdate(${context.dao.dto})
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		$SQLTool.getDelete(${context.dao.dto})
+	</delete>
+
+</mapper>

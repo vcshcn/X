@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.process.impl.repository.dao.IProcessDefinitionNodeDAO">
+
+	<resultMap type="net.xway.process.def.AbstractExecutor" id="AbstractExecutor">
+		<id property="processDefinitionNodeID" column="PROCESSDEFINITIONNODEID" />
+		<result property="key" column="KEY" />
+		<result property="name" column="NAME" />
+		<result property="description" column="DESCRIPTION" />
+		
+		<collection property="flows" column="PROCESSDEFINITIONNODEID" javaType="java.util.List" select="net.xway.process.impl.repository.dao.IProcessDefinitionFlowDAO.findFlowsBySourceNode"/>
+
+		<discriminator column="TYPE" javaType="string">
+			<case value="NoneStartEvent" resultMap="NoneStartEvent" />
+			<case value="NoneEndEvnet" resultMap="NoneEndEvnet" />
+			<case value="UserTask" resultMap="UserTask" />
+		</discriminator>
+		
+	</resultMap>
+
+	<!-- Executor -->
+	<resultMap type="net.xway.process.def.AbstractActivity" id="AbstractActivity" extends="AbstractExecutor">
+	</resultMap>
+
+	<resultMap type="net.xway.process.def.AbstractEvent" id="AbstractEvent" extends="AbstractExecutor">
+	</resultMap>
+
+	<!-- Event -->
+	<resultMap type="net.xway.process.def.AbstractStartEvent" id="AbstractStartEvent" extends="AbstractEvent">
+	</resultMap>
+
+	<resultMap type="net.xway.process.def.AbstractEndEvent" id="AbstractEndEvent" extends="AbstractEvent">
+	</resultMap>
+
+	<resultMap type="net.xway.process.def.NoneStartEvent" id="NoneStartEvent" extends="AbstractStartEvent">
+	</resultMap>
+
+	<resultMap type="net.xway.process.def.NoneEndEvent" id="NoneEndEvnet" extends="AbstractEndEvent">
+	</resultMap>
+
+	<!-- Activity -->
+	<resultMap type="net.xway.process.def.AbstractTask" id="AbstractTask" extends="AbstractActivity">
+	</resultMap>
+
+	<resultMap type="net.xway.process.def.UserTask" id="UserTask" extends="AbstractTask">
+	</resultMap>
+
+ 	<select id="findByPrimaryKey" parameterType="int"  resultMap="AbstractExecutor" >
+		SELECT * FROM XT_PROCESSDEFINITIONNODE WHERE PROCESSDEFINITIONNODEID=#{processDefinitionNodeID}
+ 	</select>
+
+
+ 	<select id="findStartEvent" parameterType="int"  resultMap="AbstractExecutor" >
+		SELECT * FROM XT_PROCESSDEFINITIONNODE WHERE TYPE IN ('NoneStartEvent') AND PROCESSDEFINITIONID=#{processdefinitionid}
+ 	</select>
+
+ 	<select id="findNode"  resultMap="AbstractExecutor" >
+		SELECT * FROM XT_PROCESSDEFINITIONNODE WHERE KEY=#{key} AND PROCESSDEFINITIONID=#{processdefinitionid}
+ 	</select>
+
+</mapper>

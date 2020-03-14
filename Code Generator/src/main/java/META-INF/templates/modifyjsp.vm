@@ -1,0 +1,25 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="/include/global.jsp" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<div class="EditForm">
+	<header>${context.component.name}</header>
+	<form action="Save${context.component.name}.do" autocomplete="off" method="post">
+		<input type="hidden" name="${context.component.name}id" value="${ ${context.component.name}id }">
+		#foreach ($tr in $context.rows)
+		
+		<div>
+			#foreach ($td in ${tr.columns})
+			
+			<label>${td.label}</label>
+			<span>#foreach($input in $td.inputs) <input type="${input.type}" name="${input.name}" value="${ ${input.value} }">#end</span>
+			#end
+
+		</div>
+		#end
+
+		<footer>
+			<input type="submit" >
+		</footer>
+	</form>
+</div>

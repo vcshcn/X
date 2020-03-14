@@ -1,0 +1,26 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="/include/global.jsp" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="xway" uri="/xway-tags"%>
+
+<div class="SearchForm">
+	<header>Search ${context.component.name}</header>
+	<form action="List${context.component.name}.do" class="QueryForm">
+		<input type="hidden" name="research" value="1">
+		<section>
+			#foreach($field in ${context.fields})
+			#if (${field.orginalField.search} )
+			#set ($val = '${' + ${field.fieldName} + '}')
+			
+			<div>
+				<Label>${field.orginalField.name}</Label>
+				<input type="text" autofocus="autofocus" name="${field.fieldName}" value="${val}" >
+			</div>
+			#end
+			#end
+		</section>
+		<footer>
+			<input type="submit">
+		</footer>
+	</form>
+</div>

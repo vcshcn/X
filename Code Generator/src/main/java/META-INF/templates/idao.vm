@@ -1,0 +1,20 @@
+#set ($dto = ${context.dto})
+package ${context.packageName};
+
+import ${dto.fullClassName};
+import net.xway.base.dao.IBaseDAO;
+
+public interface ${context.className} extends IBaseDAO<${dto.className}> {
+
+#*
+	public ${dto.className} find${dto.name}ByID(int ${dto.primaryKey.propertyName});
+
+	public PageResult<${dto.name}> find${dto.name}Page(Query q); 
+	
+	public int insert${dto.name}(${dto.className} ${dto.propertyName});
+	
+	public int update${dto.name}(${dto.className} ${dto.propertyName});
+	
+	public int delete${dto.name}(int ${dto.primaryKey.propertyName});
+*#	
+}

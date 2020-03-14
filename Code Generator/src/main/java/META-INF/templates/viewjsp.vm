@@ -1,0 +1,25 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="/include/global.jsp" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<div class="ViewForm">
+	<header>${context.component.name}</header>
+		<div>
+		#foreach ($tr in $context.rows)
+		
+		<div>
+			#foreach ($td in ${tr.columns})
+			
+			<label>${td.label}</label>
+			<span>#foreach($input in $td.inputs)#if(${input.type}!="hidden")$StringTool.el(${input.name})#end #end</span>
+			#end
+			
+		</div>
+		#end
+
+		</div>
+
+		<footer>
+			<a href="Modify${context.component.name}.do?${context.component.name}id=${ ${context.component.name}id }">Modify</a>
+		</footer>
+</div>

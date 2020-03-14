@@ -1,0 +1,36 @@
+package ${context.packageName};
+
+import ${context.dto.fullClassName};
+import ${context.iservice.fullClassName};
+import net.xway.base.utils.PageResult;
+import net.xway.base.utils.PagingUtil;
+import net.xway.base.utils.Query;
+
+import com.opensymphony.xwork2.ActionSupport;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Controller("${context.className}")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class ${context.className} extends ActionSupport {
+	
+	// output
+	private PageResult<${context.dto.className}> page;
+	
+	@Override
+	public String execute() throws Exception  {
+		Query q = PagingUtil.get();
+		page = ${context.iservice.propertyName}.find${context.dto.name}Page(q);
+		
+		return SUCCESS;
+	}
+	
+	public PageResult<${context.dto.className}> getPage() {
+		return page;
+	}
+	
+	@Autowired
+	private ${context.iservice.className} ${context.iservice.propertyName};
+}

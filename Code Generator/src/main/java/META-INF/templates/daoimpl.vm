@@ -1,0 +1,11 @@
+package ${context.packageName};
+
+import org.springframework.stereotype.Repository;
+import ${context.idao.packageName}.${context.idao.className};
+import ${context.idao.dto.packageName}.${context.idao.dto.className};
+import net.xway.base.dao.BaseDAO;
+
+@Repository
+public class ${context.className} extends BaseDAO<${context.idao.dto.className}> implements ${context.idao.className} {
+
+}

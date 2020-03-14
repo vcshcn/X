@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="net.xway.process.impl.repository.dao.IProcessInstanceDAO">
+
+
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="processInstanceID" parameterType="net.xway.process.def.ProcessInstance" >
+		INSERT INTO XT_PROCESSINSTANCE(PROCESSDEFINITIONID, STATUS, CREATETIME) VALUES(#{definition.processDefinitionID}, #{status}, #{createtime})
+	</insert>
+
+</mapper>

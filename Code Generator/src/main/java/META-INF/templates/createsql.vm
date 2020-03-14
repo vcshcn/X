@@ -1,0 +1,29 @@
+#foreach ($foreign in ${context.foreignkeys})
+ALTER TABLE ${foreign.childtable.tablename} DROP FOREIGN KEY FK_${foreign.name} ;
+
+#end
+
+
+#foreach ($table in ${context.tables})
+DROP TABLE IF EXISTS ${table.tablename};
+CREATE TABLE ${table.tablename} 
+(
+#set ($i = 1)
+#foreach ($field in ${table.fields})
+	${field.fieldname} ${field.type} ${field.notnull} ${field.default} ${field.primarykey} #if($i != $table.fields.size()),#end #set($i=$i+1)
+
+#end
+) ENGINE = InnoDB;
+
+#end
+
+#foreach ($foreign in ${context.foreignkeys})
+ALTER TABLE ${foreign.childtable.tablename} ADD CONSTRAINT FK_${foreign.name} FOREIGN KEY (${foreign.childkey.fieldname}) REFERENCES ${foreign.primarytable.tablename} (${foreign.primarykey.fieldname}) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+#end
+#foreach ($table in ${context.tables})
+
+DELETE FROM XT_VIEW WHERE NAME = '${table.component.name}';
+INSERT INTO XT_VIEW(NAME, `TYPE`, SERVICENAME, SERVICEINTERFACE, SERVICEIMPL) VALUES('${table.component.name}', 'table', '${table.component.name}Service','${context.componentPackageName}.service.I${table.component.name}Service', '${context.componentPackageName}.service.impl.${table.component.name}ServiceImpl');
+
+#end

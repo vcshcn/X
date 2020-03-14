@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package extends="basic" name="${context.name}">
+		#foreach ($action in ${context.actions})
+
+		<action name="${action.humanName}" class="${action.className}">	#if ($action.resultType == "frame")
+
+			<result type="${action.resultType}">#foreach ($entry in  $action.param.entrySet() )
+			
+				<param name="${entry.key}">$entry.value</param> #end
+
+			</result> #end #if ($action.resultType == "redirectAction")
+			
+			<result type="${action.resultType}">${action.location}</result>	#end
+
+		</action>
+		#end
+
+	</package>
+</struts>
