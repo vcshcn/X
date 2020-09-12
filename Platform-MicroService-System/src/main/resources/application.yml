@@ -8,7 +8,7 @@ spring:
   cloud:
     zookeeper:
       enabled: true
-      connect-string: 192.168.0.5:2181
+      connect-string: 192.168.0.103:2181
   datasource:
       type: net.xway.base.database.datasource.SimpleDbcpDataSourceProxy
       url: jdbc:mariadb://localhost:3306/XWAY?characterEncoding=UTF-8&useUnicode=true
