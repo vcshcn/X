@@ -7,7 +7,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>platform-microservice-parent</artifactId>
+	<artifactId>Platform-MicroService-Parent</artifactId>
 	<name>Platform MicroService Parent</name>
 	<packaging>pom</packaging>
 
@@ -15,7 +15,7 @@
 		<dependencies>
 			<dependency>
 			    <groupId>net.xway</groupId>
-			    <artifactId>base</artifactId>
+			    <artifactId>Platform-Base</artifactId>
 			    <version>${platform.version}</version>
 			</dependency>
 		</dependencies>
@@ -55,7 +55,7 @@
 
 		<dependency>
 			<groupId>net.xway</groupId>
-			<artifactId>base</artifactId>
+			<artifactId>Platform-Base</artifactId>
 		</dependency>
 
 	</dependencies>

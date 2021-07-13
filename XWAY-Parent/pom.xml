@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<name>xway</name>
 	<groupId>net.xway</groupId>
-	<artifactId>xway-parent</artifactId>
+	<artifactId>XWAY-Parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<inceptionYear>2012</inceptionYear>
 	<description>XWAY PROJECT</description>
@@ -74,7 +74,7 @@
 	
 	<properties>
 		<!-- Project information -->
-		<project.target.name>xway</project.target.name>
+		<project.target.name>XWAY-Parent</project.target.name>
 		<project.version>0.0.1-SNAPSHOT</project.version>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <project.build.finalName>${project.target.name}-${project.name}-${project.version}</project.build.finalName>
@@ -85,10 +85,10 @@
 		<spring-cloud.version>Hoxton.SR1</spring-cloud.version>
 
 		<!--  Compiler env -->
-		<java.version>13</java.version>
-		<maven.compiler.target>13</maven.compiler.target>
-		<maven.compiler.source>13</maven.compiler.source>
-		<maven.compiler.compilerVersion>13</maven.compiler.compilerVersion>
+		<java.version>1.8</java.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
 		
 		<!-- Platform -->
 		<platform.version>0.0.1-SNAPSHOT</platform.version>

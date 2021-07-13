@@ -7,14 +7,14 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>api</artifactId>
-	<name>api</name>
+	<artifactId>Platform-MicroService-SystemAPI</artifactId>
+	<name>system-api</name>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 		    <groupId>net.xway</groupId>
-		    <artifactId>base</artifactId>
+		    <artifactId>Platform-Base</artifactId>
 		    <version>${platform.version}</version>
 		</dependency>
 		

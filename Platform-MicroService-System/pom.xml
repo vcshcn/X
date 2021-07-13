@@ -6,20 +6,20 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>platform-microservice-system</artifactId>
+	<artifactId>Platform-MicroService-System</artifactId>
 	<name>Platform-MicroService-System</name>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 		    <groupId>net.xway</groupId>
-		    <artifactId>api</artifactId>
+		    <artifactId>Platform-MicroService-SystemAPI</artifactId>
 		    <version>${platform.version}</version>
 		</dependency>
 		
 		<dependency>
 		    <groupId>net.xway</groupId>
-		    <artifactId>base</artifactId>
+		    <artifactId>Platform-Base</artifactId>
 		</dependency>
 
 		<dependency>

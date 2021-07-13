@@ -6,8 +6,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>base</artifactId>
-	<name>base</name>
+	<artifactId>Platform-Base</artifactId>
+	<name>Base</name>
 	<packaging>jar</packaging>
 
 	<dependencies>

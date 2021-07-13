@@ -39,7 +39,7 @@
 		
 		<dependency>
 		    <groupId>net.xway</groupId>
-		    <artifactId>api</artifactId>
+		    <artifactId>Platform-MicroService-SystemAPI</artifactId>
 		    <version>${platform.version}</version>
 		</dependency>
 
